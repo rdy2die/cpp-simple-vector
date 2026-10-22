@@ -166,6 +166,7 @@ public:
     }
     
     const Type& operator[](size_t index) const noexcept {
+        assert(index < size_);
         return items_[index];
     }
     
@@ -195,7 +196,7 @@ public:
         if (new_size > capacity_) {
             Reserve(std::max(new_size, capacity_ * 2));
         }
-        std::generate(begin(), end(), [] { return Type{}; });
+        std::generate(end(), begin() + new_size, [] { return Type{}; });
         size_ = new_size;
     }
     
